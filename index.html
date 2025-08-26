@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Info</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; }
+        form { display: flex; flex-direction: column; }
+        label { margin-top: 10px; }
+        input { padding: 8px; margin-top: 5px; }
+        button { margin-top: 20px; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        #message { margin-top: 10px; color: green; }
+
+		img {
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+		}
+    </style>
+</head>
+<body>
+	<img src="https://yt3.googleusercontent.com/mKFBK3KD68AKMIvhexdl1HnRCTo0U0uhZ-vuHl9h-StqgRPu8UIGhgpvtybdwRv2JkpkUocx9Q=s160-c-k-c0x00ffffff-no-rj">
+    <h1>Men's events contact info.</h1>
+    <form id="userForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890">
+        
+        <button type="submit">Submit</button>
+    </form>
+    <div id="message">
+	<b>This information will be used for individual texts</b>
+	</div>
+
+    <script>
+        const form = document.getElementById('userForm');
+        const message = document.getElementById('message');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();  // Prevent default form submission
+            
+            const formData = new FormData(form);
+            const url = 'https://script.google.com/macros/s/AKfycbygzYGetAjb2dk05t-XwOHY58J8JACCX1FzLXexruRfbigHQPqiDQ_cPaZzKf_Yr64YXA/exec';  // Paste your Apps Script URL here
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    message.textContent = 'Submitted successfully!';
+                    form.reset();  // Clear form
+                } else {
+                    message.textContent = 'Error submitting. Try again.';
+                }
+            } catch (error) {
+                message.textContent = 'Network error. Try again.';
+            }
+        });
+    </script>
+</body>
+</html>
